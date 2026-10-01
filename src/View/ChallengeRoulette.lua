@@ -124,7 +124,9 @@ function ChallengeRouletteUi:UpdateAnimation(elapsed)
         local challenge = addonTable.Roulette:GetChallenge(randomID)
 
         if challenge then
-            wheelText:SetText("" .. challenge.title .. "")
+            wheelText:SetText("[" .. challenge.title .. "]")
+            local rarityColor = addonTable.Roulette:GetRarityColor(challenge.rarity)
+            wheelText:SetTextColor(rarityColor[1], rarityColor[2], rarityColor[3])
             PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON)
         end
 
@@ -140,7 +142,10 @@ function ChallengeRouletteUi:FinishAnimation()
         return
     end
 
-    wheelText:SetText(challenge.title)
+    wheelText:SetText("[" .. challenge.title .. "]")
+    local rarityColor = addonTable.Roulette:GetRarityColor(challenge.rarity)
+    wheelText:SetTextColor(rarityColor[1], rarityColor[2], rarityColor[3])
+
     challengeText:SetText(challenge.title)
     descriptionText:SetText(challenge.description)
     PlaySound(8960)
