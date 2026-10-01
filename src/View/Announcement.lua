@@ -45,7 +45,7 @@ function AnnouncementUI:ShowAnnouncement(playerName, level, challengeID, reason)
 
     if(reason == "death") then
         playerLevelText:SetText("Oh nein! " .. playerName .. " ist mit Level " .. tostring(level) .. " gestorben.")
-    else
+    elseif(reason == "levelup") then
         playerLevelText:SetText("Ding, Level Up! " .. playerName .. " ist jetzt Level " .. tostring(level))
     end
 
