@@ -43,9 +43,11 @@ function addonTable:OnLocalLevelUp(level)
 
     self.ProcessedEvents[eventID] = true
 
-    self.ChallengeRoullette:ShowChallenge(playerName, level, challengeID,"levelup")
+    self.ChallengeRoullette:ShowChallenge(playerName, level, challengeID, "levelup")
     
-    self.Communication:SendLevelUp(playerName, level, challengeID, eventID)
+    C_Timer.After(3, function() 
+        self.Communication:SendLevelUp(playerName, level, challengeID, eventID)
+    end)
 end
 
 -- handles local death
@@ -65,7 +67,10 @@ function addonTable:OnLocalDeath(level)
 
     self.ChallengeRoullette:ShowChallenge(playerName, level, challengeID, "death")
     
-    self.Communication:SendDeath(playerName, level, challengeID, eventID)
+    C_Timer.After(3, function() 
+        self.Communication:SendDeath(playerName, level, challengeID, eventID)
+    end)
+    
 end
 
 -- draft function for handling remote level up events
@@ -76,7 +81,9 @@ function addonTable:OnRemoteLevelUp(playerName, level, challengeID, eventID, sen
 
     self.ProcessedEvents[eventID] = true
 
-    self.AnnouncementUi:ShowAnnouncement(playerName, level, challengeID)
+    print("|cff00ff00[Level Roulette]|r " .. playerName .. " ist Level " .. tostring(level) .. " geworden.")
+
+    self.AnnouncementUi:ShowAnnouncement(playerName, level, challengeID, "levelup")
 end
 
 -- draft function for handling remote death events
@@ -87,7 +94,7 @@ function addonTable:OnRemoteDeath(playerName, level, challengeID, eventID, sende
 
     self.ProcessedEvents[eventID] = true
 
-    self.AnnouncementUi:ShowAnnouncement(playerName, level, challengeID)
+    self.AnnouncementUi:ShowAnnouncement(playerName, level, challengeID, "death")
 end
 
 -- shows optional help message when the addon is loaded
