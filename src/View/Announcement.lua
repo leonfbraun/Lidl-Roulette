@@ -9,7 +9,6 @@ local playerLevelText
 local challengeTitleText
 local challengeDescriptionText
 
-
 function AnnouncementUI.Initialize()
     announcementFrame = CreateFrame("Frame", nil, UIParent)
 
