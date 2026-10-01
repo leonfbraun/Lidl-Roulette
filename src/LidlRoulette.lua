@@ -35,7 +35,7 @@ function addonTable:OnLocalLevelUp(level)
         return
     end
 
-    print("|cff00ff00[Level Roulette]|r " .. playerName ..
+    print("|cff00ff00[Lidl Roulette]|r " .. playerName ..
         " ist jetzt Level " .. tostring(level) .. "!")
 
     local eventID = self:CreateEventID()
@@ -58,7 +58,7 @@ function addonTable:OnLocalDeath(level)
         return
     end
 
-    print("|cff00ff00[Level Roulette]|r " .. playerName .. "ist mit Level " .. tostring(level) .. " gestorben.")
+    print("|cff00ff00[Lidl Roulette]|r " .. playerName .. "ist mit Level " .. tostring(level) .. " gestorben.")
 
     local eventID = self:CreateEventID()
     local challengeID = self.Roulette:Roll()
@@ -81,7 +81,7 @@ function addonTable:OnRemoteLevelUp(playerName, level, challengeID, eventID, sen
 
     self.ProcessedEvents[eventID] = true
 
-    print("|cff00ff00[Level Roulette]|r " .. playerName .. " ist Level " .. tostring(level) .. " geworden.")
+    print("|cff00ff00[Lidl Roulette]|r " .. playerName .. " ist Level " .. tostring(level) .. " geworden.")
 
     self.AnnouncementUi:ShowAnnouncement(playerName, level, challengeID, "levelup")
 end
