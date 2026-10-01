@@ -10,7 +10,8 @@ function addonTable:Initialize()
     end
     self.Events:RegisterCommunicationEvents()
 
---! ui inits are missing
+    self.ChallengeRouletteUi:Initialize()
+    self.AnnouncementUi:Initialize()
 
     math.randomseed(time())
 
