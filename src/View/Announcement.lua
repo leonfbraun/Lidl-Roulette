@@ -22,8 +22,6 @@ function AnnouncementUI.Initialize()
 end
 
 function AnnouncementUI.AnnouceChallenge(text)
-
-
     announcementFrame.text:SetText(text)
     announcementFrame:Show()
 

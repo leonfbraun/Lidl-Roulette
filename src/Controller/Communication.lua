@@ -37,6 +37,31 @@ function Communication:SendLevelUp(playerName, level, challengeID, eventID)
     end
 end
 
+function Communication:SendDeath(playerName, level, challengeID, eventID)
+    local message = string.format(
+        "DEATH|%s|%d|%d|%s",
+        playerName,
+        level,
+        challengeID,
+        eventID
+    )
+
+    local success, errorMessage = C_ChatInfo.SendAddonMessage(
+        addonTable.PREFIX,
+        message,
+        "PARTY"
+    )
+
+    if success == false then
+        print("|cffff0000[Lidl Roulette]|r Nachricht konnte nicht gesendet werden.")
+
+        if errorMessage then
+            print("|cffff0000Fehler:|r " .. tostring(errorMessage))
+        end
+    end
+end
+
+
 function Communication:OnMessageReceived(prefix, message, channel, sender)
     if prefix ~= addonTable.PREFIX or not message then
         return
@@ -45,7 +70,7 @@ function Communication:OnMessageReceived(prefix, message, channel, sender)
     local command, playerName, level, challengeID, eventID =
         strsplit("|", message)
 
-    if command ~= "LEVELUP" then
+    if command ~= "LEVELUP" and command ~= "DEATH" then
         return
     end
 
