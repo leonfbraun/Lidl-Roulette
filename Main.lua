@@ -1,3 +1,0 @@
-local addonName, addonTable = ...
-
-addonTable.PREFIX = "LIDL_ROULETTE"

@@ -1,0 +1,142 @@
+local addonName, addonTable = ...
+
+addonTable.LevelUpRouletteUi = {}
+local LevelUpRouletteUi = addonTable.UILevelUpRouletteUi
+
+local frame
+local titleText
+local playerText
+local challengeText
+local descriptionText
+local wheelText
+
+local animationRunning = false
+
+function LevelUpRouletteUi:Initialize()
+    if frame then
+        return
+    end
+
+    frame = CreateFrame("Frame", "LevelRouletteFrame", UIParent)
+
+    frame:SetSize(460, 260)
+    frame:SetPoint("CENTER", UIParent, "CENTER", 0, 100)
+    frame:SetFrameStrata("DIALOG")
+    frame:Hide()
+
+    local background = frame:CreateTexture(nil, "BACKGROUND")
+    background:SetAllPoints()
+    background:SetColorTexture(0.03, 0.03, 0.03, 0.96)
+
+    titleText = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+    titleText:SetPoint("TOP", frame, "TOP", 0, -20)
+
+    playerText = frame:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")
+    playerText:SetPoint("TOP", titleText, "BOTTOM", 0, -10)
+
+    wheelText = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalHuge")
+    wheelText:SetPoint("CENTER", frame, "CENTER", 0, 20)
+    wheelText:SetWidth(400)
+
+    challengeText = frame:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")
+    challengeText:SetPoint("TOP", wheelText, "BOTTOM", 0, -15)
+    challengeText:SetWidth(400)
+
+    descriptionText = frame:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+    descriptionText:SetPoint("TOP", challengeText, "BOTTOM", 0, -10)
+    descriptionText:SetWidth(400)
+    descriptionText:SetJustifyH("CENTER")
+
+    local closeButton = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
+    closeButton:SetSize(100, 25)
+    closeButton:SetPoint("BOTTOM", frame, "BOTTOM", 0, 15)
+    closeButton:SetText("Schließen")
+    closeButton:SetScript("OnClick", function()
+        frame:Hide()
+    end)
+
+    frame:EnableMouse(true)
+    frame:SetMovable(true)
+    frame:RegisterForDrag("LeftButton")
+
+    frame:SetScript("OnDragStart", function(self)
+        self:StartMoving()
+    end)
+
+    frame:SetScript("OnDragStop", function(self)
+        self:StopMovingOrSizing()
+    end)
+
+    frame:SetScript("OnUpdate", function(self, elapsed)
+        if animationRunning then
+            LevelUpRouletteUi:UpdateAnimation(elapsed)
+        end
+    end)
+end
+
+function LevelUpRouletteUi:ShowLevelUp(playerName, level, challengeID)
+    local challenge = addonTable.Roulette:GetChallenge(challengeID)
+
+    if not challenge then
+        print("|cffff0000[Level Roulette]|r Unbekannte Challenge-ID: " ..
+            tostring(challengeID))
+        return
+    end
+
+    self:Initialize()
+    frame:Show()
+
+    titleText:SetText("LEVEL UP!")
+    playerText:SetText(playerName .. " ist jetzt Level " .. tostring(level))
+    wheelText:SetText("● ● ●")
+    challengeText:SetText("")
+    descriptionText:SetText("")
+
+    self.targetChallengeID = challengeID
+    self.animationElapsed = 0
+    self.animationDuration = 2.5
+    self.animationAccumulator = 0
+    self.animationInterval = 0.08
+
+    animationRunning = true
+end
+
+function LevelUpRouletteUi:UpdateAnimation(elapsed)
+    self.animationElapsed = self.animationElapsed + elapsed
+    self.animationAccumulator = self.animationAccumulator + elapsed
+
+    if self.animationElapsed >= self.animationDuration then
+        animationRunning = false
+        self:FinishAnimation()
+        return
+    end
+
+    if self.animationAccumulator >= self.animationInterval then
+        self.animationAccumulator = 0
+
+        local randomID = addonTable.Roulette:Roll()
+        local challenge = addonTable.Roulette:GetChallenge(randomID)
+
+        if challenge then
+            wheelText:SetText("> " .. challenge.title .. "")
+            PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON)
+
+        end
+
+        local progress = self.animationElapsed / self.animationDuration
+        self.animationInterval = 0.05 + (progress * 0.30)
+    end
+end
+
+function LevelUpRouletteUi:FinishAnimation()
+    local challenge = addonTable.Roulette:GetChallenge(self.targetChallengeID)
+
+    if not challenge then
+        return
+    end
+
+    wheelText:SetText(challenge.title)
+    challengeText:SetText(challenge.title)
+    descriptionText:SetText(challenge.description)
+    PlaySound(8960)
+end
