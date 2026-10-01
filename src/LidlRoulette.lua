@@ -43,7 +43,7 @@ function addonTable:OnLocalLevelUp(level)
 
     self.ProcessedEvents[eventID] = true
 
-    self.ChallengeRoullette:ShowChallenge(playerName, level, challengeID, "levelup")
+    self.ChallengeRouletteUi:ShowChallenge(playerName, level, challengeID, "levelup")
     
     C_Timer.After(3, function() 
         self.Communication:SendLevelUp(playerName, level, challengeID, eventID)
@@ -65,7 +65,7 @@ function addonTable:OnLocalDeath(level)
 
     self.ProcessedEvents[eventID] = true
 
-    self.ChallengeRoullette:ShowChallenge(playerName, level, challengeID, "death")
+    self.ChallengeRouletteUi:ShowChallenge(playerName, level, challengeID, "death")
     
     C_Timer.After(3, function() 
         self.Communication:SendDeath(playerName, level, challengeID, eventID)
@@ -101,7 +101,8 @@ end
 function addonTable:PrintHelp()
     print("|cff00ff00[Lidl Roulette]|r Addon geladen. Version: " .. self.VERSION)
     print("|cff00ff00[Lidl Roulette]|r Verfügbare Befehle:")
-    print("|cff00ff00/lidl test|r - Zeigt eine Test-Challenge an.")
+    print("|cff00ff00/lidl testRoll|r - Zeigt eine Test-Challenge an.")
+    print("|cff00ff00/lidl testAnnouncement|r - Zeigt eine Test-Meldung an.")
     print("|cff00ff00/lidl challenges|r - Listet alle verfügbaren Challenges auf.")
 end
 
@@ -110,12 +111,21 @@ SLASH_LEVELROULETTE1 = "/lidl"
 SlashCmdList["LEVELROULETTE"] = function(message)
     message = string.lower(message or "")
 
-    if message == "test" then
+    if message == "testRoll" then
         local playerName = UnitName("player") or "Testspieler"
         local level = UnitLevel("player") or 1
         local challengeID = addonTable.Roulette:Roll()
 
-        addonTable.UI:ShowChallenge(playerName, level, challengeID, "levelup")
+        addonTable.ChallengeRouletteUi:ShowChallenge(playerName, level, challengeID, "levelup")
+        return
+    end
+
+    if message == "testAnnouncement" then
+        local playerName = UnitName("player") or "Testspieler"
+        local level = UnitLevel("player") or 1
+        local challengeID = addonTable.Roulette:Roll()
+
+        addonTable.AnnouncementUi:ShowAnnouncement(playerName, level, challengeID, "levelup")
         return
     end
 
