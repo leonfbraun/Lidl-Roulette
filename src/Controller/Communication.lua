@@ -8,7 +8,7 @@ function Communication:InitializeCommunication()
     local success = C_ChatInfo.RegisterAddonMessagePrefix(addonTable.PREFIX)
 
     if not success then
-        print("|cffff0000[Level Roulette]|r Konnte Kommunikations-Prefix nicht registrieren.")
+        print("|cffff0000[Lidl Roulette]|r Konnte Kommunikations-Prefix nicht registrieren.")
         return
     end
 end
@@ -29,7 +29,7 @@ function Communication:SendLevelUp(playerName, level, challengeID, eventID)
     )
 
     if success == false then
-        print("|cffff0000[Level Roulette]|r Nachricht konnte nicht gesendet werden.")
+        print("|cffff0000[Lidl Roulette]|r Nachricht konnte nicht gesendet werden.")
 
         if errorMessage then
             print("|cffff0000Fehler:|r " .. tostring(errorMessage))
@@ -53,7 +53,7 @@ function Communication:OnMessageReceived(prefix, message, channel, sender)
     challengeID = tonumber(challengeID)
 
     if not playerName or not level or not challengeID or not eventID then
-        print("|cffff0000[Level Roulette]|r Ungültige Nachricht von " .. tostring(sender))
+        print("|cffff0000[Lidl Roulette]|r Ungültige Nachricht von " .. tostring(sender))
         return
     end
 

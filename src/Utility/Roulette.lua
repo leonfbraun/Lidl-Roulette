@@ -1,6 +1,5 @@
 local addonName, addonTable = ...
 
-
 addonTable.Roulette = {}
 local Roulette = addonTable.Roulette
 

@@ -1,7 +1,7 @@
 local addonName, addonTable = ...
 
-addonTable.LevelUpRouletteUi = {}
-local LevelUpRouletteUi = addonTable.UILevelUpRouletteUi
+addonTable.ChallengeRouletteUi = {}
+local ChallengeRouletteUi = addonTable.ChallengeRouletteUi
 
 local frame
 local titleText
@@ -12,12 +12,12 @@ local wheelText
 
 local animationRunning = false
 
-function LevelUpRouletteUi:Initialize()
+function ChallengeRouletteUi:Initialize()
     if frame then
         return
     end
 
-    frame = CreateFrame("Frame", "LevelRouletteFrame", UIParent)
+    frame = CreateFrame("Frame", "ChallengeRouletteFrame", UIParent)
 
     frame:SetSize(460, 260)
     frame:SetPoint("CENTER", UIParent, "CENTER", 0, 100)
@@ -69,16 +69,16 @@ function LevelUpRouletteUi:Initialize()
 
     frame:SetScript("OnUpdate", function(self, elapsed)
         if animationRunning then
-            LevelUpRouletteUi:UpdateAnimation(elapsed)
+            ChallengeRouletteUi:UpdateAnimation(elapsed)
         end
     end)
 end
 
-function LevelUpRouletteUi:ShowLevelUp(playerName, level, challengeID)
+function ChallengeRouletteUi:ShowChallenge(playerName, level, challengeID, challengeReason)
     local challenge = addonTable.Roulette:GetChallenge(challengeID)
 
     if not challenge then
-        print("|cffff0000[Level Roulette]|r Unbekannte Challenge-ID: " ..
+        print("|cffff0000[Lidl Roulette]|r Unbekannte Challenge-ID: " ..
             tostring(challengeID))
         return
     end
@@ -86,8 +86,14 @@ function LevelUpRouletteUi:ShowLevelUp(playerName, level, challengeID)
     self:Initialize()
     frame:Show()
 
-    titleText:SetText("LEVEL UP!")
-    playerText:SetText(playerName .. " ist jetzt Level " .. tostring(level))
+    if challengeReason == "death" then 
+        titleText:SetText("You died!")
+        playerText:SetText(playerName .. "ist mit Level " .. tostring(level) .. " gestorben.")
+    elseif challengeReason == "levelup" then
+        titleText:SetText("LEVEL UP!")
+        playerText:SetText(playerName .. " ist jetzt Level " .. tostring(level))
+    end
+    
     wheelText:SetText("● ● ●")
     challengeText:SetText("")
     descriptionText:SetText("")
@@ -101,7 +107,7 @@ function LevelUpRouletteUi:ShowLevelUp(playerName, level, challengeID)
     animationRunning = true
 end
 
-function LevelUpRouletteUi:UpdateAnimation(elapsed)
+function ChallengeRouletteUi:UpdateAnimation(elapsed)
     self.animationElapsed = self.animationElapsed + elapsed
     self.animationAccumulator = self.animationAccumulator + elapsed
 
@@ -118,9 +124,8 @@ function LevelUpRouletteUi:UpdateAnimation(elapsed)
         local challenge = addonTable.Roulette:GetChallenge(randomID)
 
         if challenge then
-            wheelText:SetText("> " .. challenge.title .. "")
+            wheelText:SetText("" .. challenge.title .. "")
             PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON)
-
         end
 
         local progress = self.animationElapsed / self.animationDuration
@@ -128,7 +133,7 @@ function LevelUpRouletteUi:UpdateAnimation(elapsed)
     end
 end
 
-function LevelUpRouletteUi:FinishAnimation()
+function ChallengeRouletteUi:FinishAnimation()
     local challenge = addonTable.Roulette:GetChallenge(self.targetChallengeID)
 
     if not challenge then
