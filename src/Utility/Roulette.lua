@@ -26,7 +26,7 @@ function Roulette:GetChallenge(id)
     return addonTable.Challenges[id]
 end
 
-function Roulette:GetRarityColor(rarity)
+function Roulette.GetRarityColor(rarity)
     local colors = {
         common = { 1, 1, 1 },
         uncommon = { 0.12, 1, 0 },
@@ -38,7 +38,7 @@ function Roulette:GetRarityColor(rarity)
     return colors[rarity] or { 1, 1, 1 } 
 end
 
-function Roulette:GetRarityColorCode(rarity)
+function Roulette.GetRarityColorHexCode(rarity)
     local colors = {
         common = { 1, 1, 1 },
         uncommon = { 0.12, 1, 0 },
