@@ -18,8 +18,7 @@ frame:SetScript("OnEvent", function(self, event, ...)
         local level = ...
         addonTable:OnLocalLevelUp(level)
     elseif event == "PLAYER_DEAD" then
-        local level = ...
-        addonTable:OnLocalDeath(level)
+        addonTable:OnLocalDeath()
     elseif event == "CHAT_MSG_ADDON" then
         addonTable.Communication:OnMessage(...)
     end
