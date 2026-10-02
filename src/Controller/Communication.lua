@@ -24,17 +24,27 @@ function Communication:SendLevelUp(playerName, level, challengeID, eventID)
         eventID
     )
 
-    local success, errorMessage = C_ChatInfo.SendAddonMessage(
+    local partyMessageSuccess, partyMessageErrorMessage = C_ChatInfo.SendAddonMessage(
         addonTable.PREFIX,
         message,
         "PARTY"
     )
 
-    if success == false then
+    local guildMessageSuccess, guildMessageErrorMessage = C_ChatInfo.SendAddonMessage(
+        addonTable.PREFIX,
+        message,
+        "GUILD"
+    )
+
+    if partyMessageSuccess == false and guildMessageSuccess == false then
         print("|cffff0000[Lidl Roulette]|r Nachricht konnte nicht gesendet werden.")
 
-        if errorMessage then
-            print("|cffff0000Fehler:|r " .. tostring(errorMessage))
+        if partyMessageErrorMessage then
+            print("|cffff0000Fehler:|r " .. tostring(partyMessageErrorMessage))
+        end
+
+        if guildMessageErrorMessage then
+            print("|cffff0000Fehler:|r " .. tostring(guildMessageErrorMessage))
         end
     end
 end
@@ -48,17 +58,27 @@ function Communication:SendDeath(playerName, level, challengeID, eventID)
         eventID
     )
 
-    local success, errorMessage = C_ChatInfo.SendAddonMessage(
+    local partyMessageSuccess, partyMessageErrorMessage = C_ChatInfo.SendAddonMessage(
         addonTable.PREFIX,
         message,
         "PARTY"
     )
 
-    if success == false then
+    local guildMessageSuccess, guildMessageErrorMessage = C_ChatInfo.SendAddonMessage(
+        addonTable.PREFIX,
+        message,
+        "GUILD"
+    )
+
+    if partyMessageSuccess == false and guildMessageSuccess == false then
         print("|cffff0000[Lidl Roulette]|r Nachricht konnte nicht gesendet werden.")
 
-        if errorMessage then
-            print("|cffff0000Fehler:|r " .. tostring(errorMessage))
+        if partyMessageErrorMessage then
+            print("|cffff0000Fehler:|r " .. tostring(partyMessageErrorMessage))
+        end
+
+        if guildMessageErrorMessage then
+            print("|cffff0000Fehler:|r " .. tostring(guildMessageErrorMessage))
         end
     end
 end
