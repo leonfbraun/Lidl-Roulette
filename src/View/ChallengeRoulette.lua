@@ -19,8 +19,8 @@ function ChallengeRouletteUi:Initialize()
 
     frame = CreateFrame("Frame", "ChallengeRouletteFrame", UIParent)
 
-    frame:SetSize(460, 260)
-    frame:SetPoint("CENTER", UIParent, "CENTER", 0, 100)
+    frame:SetSize(600, 350)
+    frame:SetPoint("CENTER", UIParent, "CENTER", 0, 200)
     frame:SetFrameStrata("DIALOG")
     frame:Hide()
 
@@ -29,20 +29,25 @@ function ChallengeRouletteUi:Initialize()
     background:SetColorTexture(0.03, 0.03, 0.03, 0.96)
 
     titleText = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+    titleText:SetFont("Fonts\\FRIZQT__.TTF", 35, "OUTLINE")
     titleText:SetPoint("TOP", frame, "TOP", 0, -20)
 
     playerText = frame:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")
+    playerText:SetFont("Fonts\\FRIZQT__.TTF", 20, "OUTLINE")
     playerText:SetPoint("TOP", titleText, "BOTTOM", 0, -10)
 
     wheelText = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalHuge")
+    wheelText:SetFont("Fonts\\FRIZQT__.TTF", 30, "OUTLINE")
     wheelText:SetPoint("CENTER", frame, "CENTER", 0, 20)
     wheelText:SetWidth(400)
 
     rarityText = frame:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")
+    rarityText:SetFont("Fonts\\FRIZQT__.TTF", 18, "OUTLINE")
     rarityText:SetPoint("TOP", wheelText, "BOTTOM", 0, -15)
     rarityText:SetWidth(400)
 
     descriptionText = frame:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+    descriptionText:SetFont("Fonts\\FRIZQT__.TTF", 16, "OUTLINE")
     descriptionText:SetPoint("TOP", rarityText, "BOTTOM", 0, -10)
     descriptionText:SetWidth(400)
     descriptionText:SetJustifyH("CENTER")
