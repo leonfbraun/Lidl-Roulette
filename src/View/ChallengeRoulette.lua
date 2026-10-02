@@ -48,7 +48,7 @@ function ChallengeRouletteUi:Initialize()
 
     descriptionText = frame:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
     descriptionText:SetFont("Fonts\\FRIZQT__.TTF", 16, "OUTLINE")
-    descriptionText:SetPoint("TOP", rarityText, "BOTTOM", 0, -10)
+    descriptionText:SetPoint("TOP", rarityText, "BOTTOM", 0, -22)
     descriptionText:SetWidth(400)
     descriptionText:SetJustifyH("CENTER")
 
@@ -130,7 +130,7 @@ function ChallengeRouletteUi:UpdateAnimation(elapsed)
 
         if challenge then
             wheelText:SetText("[" .. challenge.title .. "]")
-            local rarityColor = addonTable.Roulette:GetRarityColor(challenge.rarity)
+            local rarityColor = addonTable.Roulette.GetRarityColor(challenge.rarity)
             wheelText:SetTextColor(rarityColor[1], rarityColor[2], rarityColor[3])
             PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON)
         end
@@ -148,11 +148,16 @@ function ChallengeRouletteUi:FinishAnimation()
     end
 
     wheelText:SetText("[" .. challenge.title .. "]")
-    local rarityColor = addonTable.Roulette:GetRarityColor(challenge.rarity)
+    local rarityColor = addonTable.Roulette.GetRarityColor(challenge.rarity)
     wheelText:SetTextColor(rarityColor[1], rarityColor[2], rarityColor[3])
 
     rarityText:SetText(challenge.rarity)
     rarityText:SetTextColor(rarityColor[1], rarityColor[2], rarityColor[3])
     descriptionText:SetText(challenge.description)
     PlaySound(8960)
+
+    local rarityColorCode = addonTable.Roulette.GetRarityColorHexCode(challenge.rarity)
+    local challengeTitle = "Challenge: |cff" .. rarityColorCode .. "[" .. challenge.title .. "]|r"
+    print("|cff2674cc[L|cffff0000i|rDL Roulette]|r " .. challengeTitle)
+    print("|cff2674cc[L|cffff0000i|rDL Roulette]|r " .. challenge.description)
 end

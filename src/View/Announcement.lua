@@ -64,7 +64,7 @@ function AnnouncementUI:ShowAnnouncement(playerName, level, challengeID, reason)
     end
     
     playerAnnouncementText:SetText(announcementMessage)
-    local rarityColorCode = addonTable.Roulette:GetRarityColorCode(challenge.rarity)
+    local rarityColorCode = addonTable.Roulette.GetRarityColorHexCode(challenge.rarity)
     
     local challengeTitle = "Challenge: |cff" .. rarityColorCode .. "[" .. challenge.title .. "]|r"
     challengeTitleText:SetText(challengeTitle)
