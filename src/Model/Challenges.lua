@@ -12,7 +12,7 @@ addonTable.Challenges = {
     { title= "Dann doch lieber 10 Hs", description="Mache 3 Burpees", rarity= "rare"},
     { title= "Wahrheit!", description="Wähle einen Spieler, der dir eine Frage stellen soll", rarity= "rare"},
     { title= "Mindfuck", description="Spiele für 60 Sekunden mit umgedrehter Maus.", rarity= "epic"},
-    { title= "Phasmo", description="Phasmo an mei Eier (Fass an die Eier von einem deiner Mitspieler)", rarity= "epic"},
+    { title= "Phasmo", description="Phasmo an dei Eier (Spiele die nächsten 5 Minuten mit nur einer Hand)", rarity= "epic"},
     { title= "Sally goes up", description="Wenn du einen Stehschreibtisch hast, fahre ihn bis zum nächsten Event hoch. Wenn nicht, stehe auf und versuche 60 Sekunden mit durchgestreckten Beinen deine Zehen zu erreichen.", rarity= "epic"},
     { title= "Mom!", description="Ruf deine Mutter/deinen Vater an, falls das letzte Mal mehr als 1 Woche her ist.", rarity= "legendary"},
     { title= "Ausziehen", description="Zieh deinem Charakter für die nächsten 30 Minuten die Hose aus", rarity= "legendary"},
