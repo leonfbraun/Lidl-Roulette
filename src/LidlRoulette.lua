@@ -110,12 +110,8 @@ SlashCmdList["LEVELROULETTE"] = function(message)
     message = string.lower(message or "")
 
     if message == "test" then
-        local playerName = UnitName("player") or "Testspieler"
         local level = UnitLevel("player") or 1
-        local challengeID = addonTable.Roulette:Roll()
-        print("|cff2674cc[L|cffff0000i|rDL Roulette]|r Test-Challenge für " .. playerName .. " mit Level " .. tostring(level) .. " und Challenge-ID " .. tostring(challengeID))
-
-        addonTable.ChallengeRouletteUi:ShowChallenge(playerName, level, challengeID, "levelup")
+        addonTable:OnLocalLevelUp(level)
         return
     end
 
