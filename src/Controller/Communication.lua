@@ -104,5 +104,5 @@ function Communication:OnMessageReceived(prefix, message, channel, sender)
         return
     end
 
-    addonTable.OnRemoteLevelUp(playerName, playerLevel, playerChallengeID, eventID, sender)
+    addonTable:OnRemoteLevelUp(playerName, playerLevel, playerChallengeID, eventID, sender)
 end
