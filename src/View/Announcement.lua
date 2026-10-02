@@ -5,32 +5,31 @@ addonTable.AnnouncementUi = {}
 local AnnouncementUI = addonTable.AnnouncementUi
 
 local announcementFrame
-local playerLevelText
+local playerAnnouncementText
 local challengeTitleText
 local challengeDescriptionText
 
-function AnnouncementUI.Initialize()
+function AnnouncementUI:Initialize()
     announcementFrame = CreateFrame("Frame", nil, UIParent)
-
     announcementFrame:SetSize(900, 150)
     announcementFrame:SetPoint("CENTER", UIParent, "CENTER", 0, 150)
 
-    playerLevelText = announcementFrame:CreateFontString(nil, "OVERLAY")
-    playerLevelText:SetFont("Fonts\\FRIZQT__.TTF", 32, "OUTLINE")
-    playerLevelText:SetPoint("TOP", announcementFrame, "TOP", 0, 0)
-    playerLevelText:SetWidth(900)
-    playerLevelText:SetJustifyH("CENTER")
+    playerAnnouncementText = announcementFrame:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+    playerAnnouncementText:SetFont("Fonts\\FRIZQT__.TTF", 26, "OUTLINE")
+    playerAnnouncementText:SetPoint("TOP", announcementFrame, "TOP", 0, -10)
+    playerAnnouncementText:SetWidth(880)
+    playerAnnouncementText:SetJustifyH("CENTER")
 
-    challengeTitleText = announcementFrame:CreateFontString(nil, "OVERLAY")
-    challengeTitleText:SetFont("Fonts\\FRIZQT__.TTF", 24, "OUTLINE")
-    challengeTitleText:SetPoint("TOP", playerLevelText, "BOTTOM", 0, -8)
-    challengeTitleText:SetWidth(900)
+    challengeTitleText = announcementFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    challengeTitleText:SetFont("Fonts\\FRIZQT__.TTF", 22, "OUTLINE")
+    challengeTitleText:SetPoint("TOP", playerAnnouncementText, "BOTTOM", 0, -8)
+    challengeTitleText:SetWidth(880)
     challengeTitleText:SetJustifyH("CENTER")
 
-    challengeDescriptionText = announcementFrame:CreateFontString(nil, "OVERLAY")
+    challengeDescriptionText = announcementFrame:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
     challengeDescriptionText:SetFont("Fonts\\FRIZQT__.TTF", 18, "OUTLINE")
     challengeDescriptionText:SetPoint("TOP", challengeTitleText, "BOTTOM", 0, -8)
-    challengeDescriptionText:SetWidth(900)
+    challengeDescriptionText:SetWidth(880)
     challengeDescriptionText:SetJustifyH("CENTER")
     challengeDescriptionText:SetWordWrap(true)
 
@@ -42,18 +41,23 @@ function AnnouncementUI:ShowAnnouncement(playerName, level, challengeID, reason)
     if not challenge then
         return
     end
-
-    if(reason == "death") then
-        playerLevelText:SetText("Oh nein! " .. playerName .. " ist mit Level " .. tostring(level) .. " gestorben.")
-    elseif(reason == "levelup") then
-        playerLevelText:SetText("Ding, Level Up! " .. playerName .. " ist jetzt Level " .. tostring(level))
+    
+    local announcementMessage
+    if reason == "death" then
+        announcementMessage = playerName .. " ist mit Level " .. tostring(level) .. " gestorben."
+    elseif reason == "levelup" then
+        announcementMessage = "Ding, Level Up! " .. playerName .. " ist jetzt Level " .. tostring(level)
+    else
+        return
     end
-
-    challengeTitleText:SetText("Seine Challenge lautet: " .. challenge.title)
+    
+    playerAnnouncementText:SetText(announcementMessage)
+    challengeTitleText:SetText("Challenge: " .. challenge.title)
     challengeDescriptionText:SetText(challenge.description)
     announcementFrame:Show()
+    PlaySound(8959)
 
-    C_Timer.After(5, function()
+    C_Timer.After(7, function()
         announcementFrame:Hide()
     end)
 end
