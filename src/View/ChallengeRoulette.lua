@@ -6,7 +6,7 @@ local ChallengeRouletteUi = addonTable.ChallengeRouletteUi
 local frame
 local titleText
 local playerText
-local challengeText
+local rarityText
 local descriptionText
 local wheelText
 
@@ -38,12 +38,12 @@ function ChallengeRouletteUi:Initialize()
     wheelText:SetPoint("CENTER", frame, "CENTER", 0, 20)
     wheelText:SetWidth(400)
 
-    challengeText = frame:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")
-    challengeText:SetPoint("TOP", wheelText, "BOTTOM", 0, -15)
-    challengeText:SetWidth(400)
+    rarityText = frame:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")
+    rarityText:SetPoint("TOP", wheelText, "BOTTOM", 0, -15)
+    rarityText:SetWidth(400)
 
     descriptionText = frame:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
-    descriptionText:SetPoint("TOP", challengeText, "BOTTOM", 0, -10)
+    descriptionText:SetPoint("TOP", rarityText, "BOTTOM", 0, -10)
     descriptionText:SetWidth(400)
     descriptionText:SetJustifyH("CENTER")
 
@@ -95,7 +95,7 @@ function ChallengeRouletteUi:ShowChallenge(playerName, level, challengeID, chall
     end
     
     wheelText:SetText("● ● ●")
-    challengeText:SetText("")
+    rarityText:SetText("")
     descriptionText:SetText("")
 
     self.targetChallengeID = challengeID
@@ -146,7 +146,8 @@ function ChallengeRouletteUi:FinishAnimation()
     local rarityColor = addonTable.Roulette:GetRarityColor(challenge.rarity)
     wheelText:SetTextColor(rarityColor[1], rarityColor[2], rarityColor[3])
 
-    challengeText:SetText(challenge.title)
+    rarityText:SetText(challenge.rarity)
+    rarityText:SetTextColor(rarityColor[1], rarityColor[2], rarityColor[3])
     descriptionText:SetText(challenge.description)
     PlaySound(8960)
 end
