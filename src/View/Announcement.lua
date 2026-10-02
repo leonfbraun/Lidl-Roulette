@@ -8,11 +8,13 @@ local announcementFrame
 local playerAnnouncementText
 local challengeTitleText
 local challengeDescriptionText
+local fadeOutAnimation
+local hideTimer
 
 function AnnouncementUI:Initialize()
     announcementFrame = CreateFrame("Frame", nil, UIParent)
     announcementFrame:SetSize(900, 150)
-    announcementFrame:SetPoint("CENTER", UIParent, "CENTER", 0, 150)
+    announcementFrame:SetPoint("CENTER", UIParent, "CENTER", 0, 350)
 
     playerAnnouncementText = announcementFrame:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
     playerAnnouncementText:SetFont("Fonts\\FRIZQT__.TTF", 26, "OUTLINE")
@@ -33,6 +35,16 @@ function AnnouncementUI:Initialize()
     challengeDescriptionText:SetJustifyH("CENTER")
     challengeDescriptionText:SetWordWrap(true)
 
+    fadeOutAnimation = announcementFrame:CreateAnimationGroup()
+    local fade = fadeOutAnimation:CreateAnimation("Alpha")
+    fade:SetFromAlpha(1)
+    fade:SetToAlpha(0)
+    fade:SetDuration(1.5)
+    fadeOutAnimation:SetScript("OnFinished", function()
+        announcementFrame:Hide()
+        announcementFrame:SetAlpha(1)
+    end)
+
     announcementFrame:Hide()
 end
 
@@ -52,12 +64,23 @@ function AnnouncementUI:ShowAnnouncement(playerName, level, challengeID, reason)
     end
     
     playerAnnouncementText:SetText(announcementMessage)
-    challengeTitleText:SetText("Challenge: " .. challenge.title)
+    local rarityColorCode = addonTable.Roulette:GetRarityColorCode(challenge.rarity)
+    
+    challengeTitleText:SetText("Challenge: |cff" .. rarityColorCode .. "[" .. challenge.title .. "]|r")
     challengeDescriptionText:SetText(challenge.description)
+    if hideTimer then
+        hideTimer:Cancel()
+        hideTimer = nil
+    end
+    if fadeOutAnimation:IsPlaying() then
+        fadeOutAnimation:Stop()
+    end
+    announcementFrame:SetAlpha(1)
     announcementFrame:Show()
     PlaySound(8959)
 
-    C_Timer.After(7, function()
-        announcementFrame:Hide()
+    hideTimer = C_Timer.NewTimer(8, function()
+        hideTimer = nil
+        fadeOutAnimation:Play()
     end)
 end
