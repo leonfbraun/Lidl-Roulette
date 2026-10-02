@@ -88,7 +88,7 @@ function ChallengeRouletteUi:ShowChallenge(playerName, level, challengeID, chall
 
     if challengeReason == "death" then 
         titleText:SetText("You died!")
-        playerText:SetText(playerName .. "ist mit Level " .. tostring(level) .. " gestorben.")
+        playerText:SetText(playerName .. " ist mit Level " .. tostring(level) .. " gestorben.")
     elseif challengeReason == "levelup" then
         titleText:SetText("LEVEL UP!")
         playerText:SetText(playerName .. " ist jetzt Level " .. tostring(level))
