@@ -20,7 +20,7 @@ frame:SetScript("OnEvent", function(self, event, ...)
     elseif event == "PLAYER_DEAD" then
         addonTable:OnLocalDeath()
     elseif event == "CHAT_MSG_ADDON" then
-        addonTable.Communication:OnMessage(...)
+        addonTable.Communication:OnMessageReceived(...)
     end
 end)
 
