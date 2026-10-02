@@ -4,13 +4,15 @@ addonTable.Communication = {}
 
 local Communication = addonTable.Communication
 
-function Communication:InitializeCommunication()
+function Communication:Initialize()
     local success = C_ChatInfo.RegisterAddonMessagePrefix(addonTable.PREFIX)
 
     if not success then
         print("|cffff0000[Lidl Roulette]|r Konnte Kommunikations-Prefix nicht registrieren.")
-        return
+        return false
     end
+
+    return true
 end
 
 function Communication:SendLevelUp(playerName, level, challengeID, eventID)
