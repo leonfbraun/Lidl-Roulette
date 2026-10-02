@@ -33,7 +33,7 @@ function addonTable:OnLocalLevelUp(level)
         return
     end
 
-    print("|cff00ff00[Lidl Roulette]|r " .. playerName ..
+    print("|cff2674cc[L|cffff0000i|rDL Roulette]|r " .. playerName ..
         " ist jetzt Level " .. tostring(level) .. "!")
 
     local eventID = self:CreateEventID()
@@ -58,7 +58,7 @@ function addonTable:OnLocalDeath()
 
     local playerLevel = UnitLevel("player") or 1
 
-    print("|cff00ff00[Lidl Roulette]|r " .. playerName .. " ist mit Level " .. tostring(playerLevel) .. " gestorben.")
+    print("|cff2674cc[L|cffff0000i|rDL Roulette]|r " .. playerName .. " ist mit Level " .. tostring(playerLevel) .. " gestorben.")
 
     local eventID = self:CreateEventID()
     local challengeID = self.Roulette:Roll()
@@ -81,8 +81,6 @@ function addonTable:OnRemoteLevelUp(playerName, level, challengeID, eventID, sen
 
     self.ProcessedEvents[eventID] = true
 
-    print("|cff00ff00[Lidl Roulette]|r " .. playerName .. " ist Level " .. tostring(level) .. " geworden.")
-
     self.AnnouncementUi:ShowAnnouncement(playerName, level, challengeID, "levelup")
 end
 
@@ -99,11 +97,11 @@ end
 
 -- shows optional help message when the addon is loaded
 function addonTable:PrintHelp()
-    print("|cff00ff00[Lidl Roulette]|r Addon geladen. Version: " .. self.VERSION)
-    print("|cff00ff00[Lidl Roulette]|r Verfügbare Befehle:")
-    print("|cff00ff00/lidl test|r - Zeigt eine Test-Challenge an.")
-    print("|cff00ff00/lidl test1|r - Zeigt eine Test-Meldung an.")
-    print("|cff00ff00/lidl challenges|r - Listet alle verfügbaren Challenges auf.")
+    print("|cff2674cc[L|cffff0000i|rDL Roulette]|r Addon geladen. Version: " .. self.VERSION)
+    print("|cff2674cc[L|cffff0000i|rDL Roulette]|r Verfügbare Befehle:")
+    print("|cff2674cc/lidl test|r - Zeigt eine Test-Challenge an.")
+    print("|cff2674cc/lidl test1|r - Zeigt eine Test-Meldung an.")
+    print("|cff2674cc/lidl challenges|r - Listet alle verfügbaren Challenges auf.")
 end
 
 SLASH_LEVELROULETTE1 = "/lidl"
@@ -115,7 +113,7 @@ SlashCmdList["LEVELROULETTE"] = function(message)
         local playerName = UnitName("player") or "Testspieler"
         local level = UnitLevel("player") or 1
         local challengeID = addonTable.Roulette:Roll()
-        print("|cff00ff00[Lidl Roulette]|r Test-Challenge für " .. playerName .. " mit Level " .. tostring(level) .. " und Challenge-ID " .. tostring(challengeID))
+        print("|cff2674cc[L|cffff0000i|rDL Roulette]|r Test-Challenge für " .. playerName .. " mit Level " .. tostring(level) .. " und Challenge-ID " .. tostring(challengeID))
 
         addonTable.ChallengeRouletteUi:ShowChallenge(playerName, level, challengeID, "levelup")
         return
@@ -125,7 +123,7 @@ SlashCmdList["LEVELROULETTE"] = function(message)
         local playerName = UnitName("player") or "Testspieler"
         local level = UnitLevel("player") or 1
         local challengeID = addonTable.Roulette:Roll()
-        print("|cff00ff00[Lidl Roulette]|r Test-Meldung für " .. playerName .. " mit Level " .. tostring(level) .. " und Challenge-ID " .. tostring(challengeID))
+        print("|cff2674cc[L|cffff0000i|rDL Roulette]|r Test-Meldung für " .. playerName .. " mit Level " .. tostring(level) .. " und Challenge-ID " .. tostring(challengeID))
 
         addonTable.AnnouncementUi:ShowAnnouncement(playerName, level, challengeID, "levelup")
         return
@@ -133,7 +131,7 @@ SlashCmdList["LEVELROULETTE"] = function(message)
 
     if message == "challenges" then
         for id, challenge in ipairs(addonTable.Challenges) do
-            print("|cff00ff00" .. tostring(id) .. ".|r " .. challenge.title)
+            print("|cff2674cc" .. tostring(id) .. ".|r " .. challenge.title)
         end
         return
     end

@@ -76,13 +76,13 @@ function Communication:OnMessageReceived(prefix, message, channel, sender)
         return
     end
 
-    level = tonumber(level)
-    challengeID = tonumber(challengeID)
+    local playerLevel = tonumber(level)
+    local playerChallengeID = tonumber(challengeID)
 
-    if not playerName or not level or not challengeID or not eventID then
+    if not playerName or not playerLevel or not playerChallengeID or not eventID then
         print("|cffff0000[Lidl Roulette]|r Ungültige Nachricht von " .. tostring(sender))
         return
     end
 
-    addonTable.OnRemoteLevelUp(playerName, level, challengeID, eventID, sender)
+    addonTable.OnRemoteLevelUp(playerName, playerLevel, playerChallengeID, eventID, sender)
 end

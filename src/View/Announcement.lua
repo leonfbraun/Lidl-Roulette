@@ -56,9 +56,9 @@ function AnnouncementUI:ShowAnnouncement(playerName, level, challengeID, reason)
     
     local announcementMessage
     if reason == "death" then
-        announcementMessage = playerName .. " ist mit Level " .. tostring(level) .. " gestorben."
+        announcementMessage = "|cffffffff" .. playerName .. "|r ist mit Level " .. tostring(level) .. " gestorben."
     elseif reason == "levelup" then
-        announcementMessage = "Ding, Level Up! " .. playerName .. " ist jetzt Level " .. tostring(level)
+        announcementMessage = "Ding, Level Up! |cffffffff" .. playerName .. "|r ist jetzt Level " .. tostring(level)
     else
         return
     end
@@ -66,8 +66,15 @@ function AnnouncementUI:ShowAnnouncement(playerName, level, challengeID, reason)
     playerAnnouncementText:SetText(announcementMessage)
     local rarityColorCode = addonTable.Roulette:GetRarityColorCode(challenge.rarity)
     
-    challengeTitleText:SetText("Challenge: |cff" .. rarityColorCode .. "[" .. challenge.title .. "]|r")
+    local challengeTitle = "Challenge: |cff" .. rarityColorCode .. "[" .. challenge.title .. "]|r"
+    challengeTitleText:SetText(challengeTitle)
+
     challengeDescriptionText:SetText(challenge.description)
+
+    print("|cff2674cc[L|cffff0000i|rDL Roulette]|r " .. announcementMessage)
+    print("|cff2674cc[L|cffff0000i|rDL Roulette]|r " .. challengeTitle)
+    print("|cff2674cc[L|cffff0000i|rDL Roulette]|r " .. challenge.description)
+
     if hideTimer then
         hideTimer:Cancel()
         hideTimer = nil
